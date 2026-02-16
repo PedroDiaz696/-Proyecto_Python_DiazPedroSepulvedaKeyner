@@ -12,6 +12,9 @@ with open("trainers.json","r", encoding="utf-8") as archivoT:
 with open("usuariosCampus.json","r", encoding="utf-8") as archivoU:
      usuariosCampus = json.load(archivoU)
 
+with open("coordinador.json", "r", encoding="utf-8") as archivo:
+     coordinador = json.load(archivo)
+
 def menuGeneral():
     
     while True:
@@ -47,10 +50,6 @@ def menuInicioSesion():
             return # sale de la funcion
     print("\n nombre o contraseña incorrectos!")
     print("")
-
-    
-def menuCoordinador():
-    print("soy el coordinador")
      
 def menuTrainer():
     print("--- BIENVENIDO TRAINER ---")
@@ -201,7 +200,8 @@ def menuCampers(correo_camper):  # CAMBIO: Recibir el correo del camper que inic
             print("Saliendo del menú camper...")
             break
 
-        
+def menuCoordinador():
+    
 
 
 
