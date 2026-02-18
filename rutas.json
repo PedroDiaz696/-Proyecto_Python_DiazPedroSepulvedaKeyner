@@ -1,5 +1,7 @@
-{
-    "modulos": [
+[
+    {
+    
+        "modulos":[
         "Fundamentos",
         "Web",
         "Formal",
@@ -9,5 +11,5 @@
     "campers": [],
     "trainer": null,
     "capacidad": 35
-}
-
+    }
+]

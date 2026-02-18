@@ -12,6 +12,9 @@ with open("usuariosCampus.json","r", encoding="utf-8") as archivoU:
 with open("rutas.json","r", encoding="utf-8") as archivo:
      rutas = json.load(archivo)
 
+with open("notas.json","r", encoding="utf-8") as archivo:
+     notas = json.load(archivo)
+
 matriculas = []
 
 def registrarExamenInicial(campers):
@@ -37,29 +40,32 @@ def registrarExamenInicial(campers):
         print("Camper no encontrado")
 
 def asignarRutaTrainer(rutas, trainers):
+
+    escTrainer = input("A que trainer quieres asignarle la ruta: ")
+
     for r in rutas:
-        print("-", r["nombre"])
+        print("-", r["modulos"])
 
     nombreRuta = input("Ruta: ")
 
     for ruta in rutas:
-        if ruta["nombre"] == nombreRuta:
+        if ruta["modulos"] == nombreRuta:
 
             for t in trainers:
-                print("-", t["nombre"])
+                print("-", t["modulos"])
             
-            nombreTrainer = input("Trainer: ")
+                nombreTrainer = input("Trainer: ")
 
-            ruta["trainer"] = nombreTrainer
-            print("Trainer asignado")
+                ruta["trainer"] = nombreTrainer
             return
+        print("Ruta asignada a: ", escTrainer)
 
 def matricularCampus(campers, rutas, matriculas):
-    idBuscar = input("ID camper: ")
+    idBuscar = input("# de identificacion: ")
 
     for camper in campers:
 
-        if camper["id"] == idBuscar:
+        if camper["# de identificacion"] == idBuscar:
 
             if camper["estado"] == "Aprobado":
                 
@@ -68,21 +74,21 @@ def matricularCampus(campers, rutas, matriculas):
                 return
 
             for ruta in rutas:
-                print("-", ruta["nombre"])
+                print("-", ruta["modulos"])
 
             nombreRuta = input("Ruta: ")
             
             for ruta in rutas:
 
-                if ruta["nombre"] == nombreRuta:
+                if ruta["modulos"] == nombreRuta:
 
                     if len(ruta["campers"]) < ruta["capacidad"]:
-                        ruta["campers"].append(camper["id"])
+                        ruta["campers"].append(camper["# de idenficiacion"])
                         camper["ruta"] = nombreRuta
                         camper["estado"] = "Cursando"
 
                         matricula = {
-                                "camper": camper["id"],
+                                "camper": camper["# de identificacion"],
                                 "ruta": nombreRuta,
                                 "trainer": ruta["trainer"],
                                 "fecha inicio": input("Fecha inicio: "),
@@ -101,11 +107,11 @@ def matricularCampus(campers, rutas, matriculas):
 
 def evaluarModulo(campers):
 
-    idBuscar = input("ID camper: ")
+    idBuscar = input("# de identificacion: ")
 
     for camper in campers:
 
-        if camper["id"] == idBuscar:
+        if camper["# de identificacion"] == idBuscar:
 
             teoria = float(input("Teoria: "))
             practica = float(input("Práctica: "))
@@ -113,10 +119,10 @@ def evaluarModulo(campers):
 
             notaFinal = teoria*0.3 + practica*0.6 + quiz*0.1
 
-            camper["notas"].append(notaFinal)
+            notas.append(notaFinal)
 
             if notaFinal < 60:
-                camper["riesgo"] = True
+                camper["en riesgo"] = True
                 print("Camper en riesgo")
             else:
                 print("Módulo aprobado")
@@ -127,8 +133,8 @@ def reporteRiesgo(campers):
     print("\n--- CAMPERS EN RIESGO ---")
 
     for camper in campers:
-        if camper["riesgo"]:
-            print(camper["nombres"], camper["apellidos"])
+        if camper["estado"]["en riesgo"]:
+            print(camper["nombre"], camper["apellido"])
 
 def matricularCamper(camper, grupo):
     grupo["campers"].append(camper)
